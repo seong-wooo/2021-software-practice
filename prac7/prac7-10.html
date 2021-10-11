@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>book 객체</title>
+</head>
+<body>
+  <script>
+    function sortfunction(a,b){
+      return a.price - b.price
+    }
+    function book(title, author, price) {
+      this.title =title;
+      this.author = author;
+      this.price = price;
+    }
+
+    var bookArray = new Array();
+    bookArray[0] = new book("HTML5","황기태","20000");
+    bookArray[1] = new book("CSS3","이재문","50000");
+    bookArray[2] = new book("Java","한원선","30000");
+    bookArray[3] = new book("스폰지밥","Grace","60000");
+    bookArray[4] = new book("C++","Kitae","25000");
+    document.write("<h3>book 객체 배열 만들기</h3>");
+    document.write("<hr>");
+    for(i=0;i<bookArray.length;i++){
+      document.write(bookArray[i].title +", ")
+      document.write(bookArray[i].author+", ")
+      document.write(bookArray[i].price+"<br>") 
+    }
+    document.write("<hr>")
+    bookArray.sort(sortfunction)
+    document.write("가장 가격이 비싼 책은 "+bookArray[bookArray.length-1].title)
+
+  </script>
+</body>
+</html>
