@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>재난 문자</title>
+  <script>  
+  function load() {
+    var xhttp = new XMLHttpRequest();
+    //주소입력
+    var url = 'http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('ServiceKey') + '='+'sKMfaOofZsR5f%2FbodU6GeeyWHlFn5zBX28QHOgcXMKTo7lwK3HdG8NNOIArpnSJ9MEKtqLLWdVw9I%2B8ufY%2BBzw%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+    queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
+
+    //주소를 서버에 넣기
+    xhttp.open('GET', url + queryParams);
+  
+  
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        addRow(this)
+      }
+    };
+
+    xhttp.send();
+  }
+  
+  function addRow(xhttp) {
+  var i;
+  var xmlDoc = xhttp.responseXML;
+  var table="<tr><th>location_name</th><th>massage</th></tr>";
+  var row = xmlDoc.getElementsByTagName("row");
+  for (i = 0; i <row.length; i++) {
+    table += "<tr><td>" + row[i].getElementsByTagName("location_name")[0].childNodes[0].nodeValue +"</td><td>" 
+    + row[i].getElementsByTagName("msg")[0].childNodes[0].nodeValue + "</td></tr>";
+  }
+  document.getElementById("demo").innerHTML = table;
+}
+
+  </script>
+
+</head>
+<body>
+
+  <div >
+    <h2>재난 문자</h2>
+    <button type="button" onclick="load()">클릭</button>
+    <p>클릭 후 잠시 기다려주세요</p>
+  </div>
+  <table id="demo" border="1" ></table>
+</body>
+</html>

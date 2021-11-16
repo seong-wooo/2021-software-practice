@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Document</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+ 
+   
+
+
+  var xhttp = new XMLHttpRequest();
+    
+    var url = 'http://apis.data.go.kr/1741000/DisasterMsg3/getDisasterMsg1List'; /*URL*/
+    var queryParams = '?' + encodeURIComponent('ServiceKey') + 
+    '='+'sKMfaOofZsR5f%2FbodU6GeeyWHlFn5zBX28QHOgcXMKTo7lwK3HdG8NNOIArpnSJ9MEKtqLLWdVw9I%2B8ufY%2BBzw%3D%3D'; /*Service Key*/
+    queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+    queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
+    queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('xml'); /**/
+    
+//제이쿼리를 이용해서 HTML파일을 읽어온다.
+    $.get(url + queryParams, function(data, status){
+          
+        var table="<tr><th>date</th><th>location</th><th>massage</th></tr>";
+        $("#mytable").append(table); 
+        
+//제이쿼리를 이용해서 HTML파일을  파싱한다.
+        $(data).find('row').each(function(){  // xml 문서 item 기준으로 분리후 반복
+        var create_date = $(this).find("create_date").text();
+
+        var location_id = $(this).find("location_id").text(); 
+
+        var msg = $(this).find("msg").text(); 
+
+//파싱한 조각을 표형식으로 이어붙인다.
+        table = "<tr><td>" +
+        create_date+
+        "</td><td>" +
+        location_id +
+        "</td><td>"+
+        msg+
+        "</td></tr>";
+
+//제이쿼리로 표를 화면에 띄운다.
+        $("#mytable").append(table);
+    });
+
+    });
+}
+);
+
+</script>
+</head>
+<body>
+  <style>
+    table {
+      width: 100%;
+      border: 1px solid black;
+    }
+    th, td {
+      border: 1px solid black;
+    }
+  </style>
+
+  
+  <table id="mytable"></table>
+</body>
+</html>
