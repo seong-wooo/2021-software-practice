@@ -55,7 +55,7 @@
     function myFunction(xml) {
       let i;
       let xmlDoc = xml.responseXML;
-      let table = "<tr><th>수신 지역</th><th>발신처</th><th>시간</th><th>내용</th></tr>";
+      let table = "<tr><th>수신 지역</th><th>내용</th></tr>";
       let x = xmlDoc.getElementsByTagName('row');
       for (i = 0; i < x.length; i++) {
         let location_name = x[i].getElementsByTagName("location_name")[0].childNodes[0].nodeValue;
@@ -64,10 +64,6 @@
         }
         table += "<tr><td width=200px>" +
           location_name +
-          "</td><td>" +
-          x[i].getElementsByTagName("send_platform")[0].childNodes[0].nodeValue +
-          "</td><td>" +
-          x[i].getElementsByTagName("create_date")[0].childNodes[0].nodeValue +
           "</td><td>" +
           x[i].getElementsByTagName("msg")[0].childNodes[0].nodeValue +
           "</td></tr>";
